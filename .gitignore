@@ -272,3 +272,6 @@ Scripts/Scripts/activate.bat
 Scripts/Scripts/Activate.ps1
 Scripts/Scripts/deactivate.bat
 .mxproject
+
+generated.wav
+Core/Inc/input_signal.h
