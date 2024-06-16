@@ -38,13 +38,13 @@ int main(void)
   	IFX_peaking_filter filt;
   	peaking_filter_init (&filt, SAMPLE_RATE); 
 
-	FILE *file = fopen("Core/Inc/output_signal.h", "w");
-	fprintf(file, "#include <stdint.h>\n");
+	  FILE *file = fopen("Core/Inc/output_signal.h", "w");
+	  fprintf(file, "#include <stdint.h>\n");
     fprintf(file, "#ifndef SIGNAL_DATA_H\n");
     fprintf(file, "#define SIGNAL_DATA_H\n\n");
     fprintf(file, "float_t output_signal_data[] = {");
-	float_t output_signal_data[SIGNAL_LENGTH];
-	fprintf(file, "#include <stdint.h>\n");
+	  float_t output_signal_data[SIGNAL_LENGTH];
+	  fprintf(file, "#include <stdint.h>\n");
 	
   	for (uint32_t n = 0; n < SIGNAL_LENGTH; n += 1) {
 
@@ -52,7 +52,7 @@ int main(void)
 		fprintf(file, "%f, ", output_signal_data[n]);
   	}
 
-	fprintf(file, "};\n\n");
+	  fprintf(file, "};\n\n");
     fprintf(file, "#define SIGNAL_LENGTH %d\n", SIGNAL_LENGTH);
     fprintf(file, "#define SAMPLE_RATE %d\n\n", SAMPLE_RATE);
     fprintf(file, "#endif // SIGNAL_DATA_H\n");

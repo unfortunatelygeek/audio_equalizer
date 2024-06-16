@@ -2,18 +2,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io.wavfile import write
 
-frequences=[100,750,1300,1850,2200,2750,3300,3850,4400,5500]
-fs=2* max(frequences) + 100
+frequences = [100,750,1300,1850,2200,2750,3300,3850,4400,5500]
+fs = 2 * max(frequences) + 100
 
-x=np.arange(fs)
+x = np.arange(fs)
 signal=0
 amplitudes=[1000,5500,2000,3600,9880,1000,8880,6000,1100,7800]
 
-j=0
+j = 0
 for i in range(len (frequences)):
-    y1=np.sin(2*np.pi*frequences[i]*(x/fs))
-    signal=signal+3000*y1
-    j=j+1
+    y1 = np.sin(2 * np.pi * frequences[i] * (x/fs))
+    signal = signal+3000*y1
+    j = j + 1
 
 with open("Core/Inc/input_signal.h", "w") as f:
 
@@ -22,8 +22,10 @@ with open("Core/Inc/input_signal.h", "w") as f:
     f.write("#ifndef SIGNAL_DATA_H\n")
     f.write("#define SIGNAL_DATA_H\n\n")
     f.write("static const uint16_t signal_data[] = {")
+
     for value in signal.astype(np.int16):
         f.write(f"{value}, ")
+    
     f.write("};\n\n")
 
     f.write(f"#define SIGNAL_LENGTH {len(signal)}\n")
