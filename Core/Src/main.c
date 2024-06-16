@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "peaking_filter.h"
 #include "input_signal.h"
 #include <stdio.h>
 
@@ -26,11 +25,8 @@
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-void filter(int);
 
-uint8_t  status = 0;
-
-
+#include "peaking_filter.h"
 
 int main(void)
 {
