@@ -3,9 +3,9 @@
 
 typedef struct
 {
-    uint8_t numStages;         /**number of 2nd order stages in the filter.  Overall order is 2*numStages. */
-    float32_t *pState;         /**points to the array of state coefficients.  The array is of length 2*numStages. */
-    const float32_t *pCoeffs;        /**points to the array of coefficients.  The array is of length 5*numStages. */
+    uint8_t numStages;              /**number of 2nd order stages in the filter.  Overall order is 2*numStages. */
+    float32_t *pState;              /**points to the array of state coefficients.  The array is of length 2*numStages. */
+    const float32_t *pCoeffs;       /**points to the array of coefficients.  The array is of length 5*numStages. */
 } biquad_iir_d2ft_instance;
 
 

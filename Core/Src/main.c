@@ -18,10 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "peaking_filter.h"
+#include "input_signal.h"
+#include <stdio.h>
 
-/* ftype: 0 = no filter, 1 = DSP FIR, 2 = DSP IIR Papoulis, 3 = DSP IIR Bessel, 4 = DSP IIR Chebyshev, 5 = Butterworth, 6 = Gauss, 7 = Gauss narrow*/
-int findex = 0;
-int fnumber = 8;
+#define AUDIO_BUFFER_SIZE SIGNAL_DATA_H
 
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -29,24 +30,41 @@ void filter(int);
 
 uint8_t  status = 0;
 
+
+
 int main(void)
 {
 
-  HAL_Init();
-  SystemClock_Config();
-  MX_GPIO_Init();
-  filter_init();
-  
-  
-  while (1)
-  {
-	findex = //input from User via HTTP server;    
-    filter(findex);
-	output_csv();  
+  	HAL_Init();
+  	SystemClock_Config();
+  	MX_GPIO_Init();
 
-  }
-  
-}
+  	IFX_peaking_filter filt;
+  	peaking_filter_init (&filt, SAMPLE_RATE); 
+
+	FILE *file = fopen("Core/Inc/output_signal.h", "w");
+	fprintf(file, "#include <stdint.h>\n");
+    fprintf(file, "#ifndef SIGNAL_DATA_H\n");
+    fprintf(file, "#define SIGNAL_DATA_H\n\n");
+    fprintf(file, "float_t output_signal_data[] = {");
+	float_t output_signal_data[SIGNAL_LENGTH];
+	fprintf(file, "#include <stdint.h>\n");
+	
+  	for (uint32_t n = 0; n < SIGNAL_LENGTH; n += 1) {
+
+		output_signal_data[n] = peaking_filter_update(&filt, signal_data[n]);
+		fprintf(file, "%f, ", output_signal_data[n]);
+  	}
+
+	fprintf(file, "};\n\n");
+    fprintf(file, "#define SIGNAL_LENGTH %d\n", SIGNAL_LENGTH);
+    fprintf(file, "#define SAMPLE_RATE %d\n\n", SAMPLE_RATE);
+    fprintf(file, "#endif // SIGNAL_DATA_H\n");
+
+    fclose(file);
+    printf("File written successfully!\n");
+	
+}	
 
 /**
   * @brief System Clock Configuration
